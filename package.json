@@ -8,9 +8,9 @@
   },
   "keywords": [
     "MAD9124",
-    "W21"
+    "W22"
   ],
-  "author": "",
+  "author": "Hygor Costa",
   "contributors": [
     "Robert McKenney <mckennr@algonquincollege.com>"
   ],
@@ -18,6 +18,10 @@
   "private": true,
   "dependencies": {
     "express": "^4.17.3",
-    "mongoose": "^6.2.3"
+    "mongoose": "^6.2.3",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
   }
 }

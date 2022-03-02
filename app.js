@@ -1,5 +1,4 @@
 // Don't forget to use NPM to install Express and Mongoose.
-
 "use strict";
 
 const mongoose = require("mongoose");
@@ -20,9 +19,9 @@ const app = express();
 app.use(morgan("tiny"));
 app.use(express.json());
 
-app.use("/api/cars", require("./routes/cars"));
+app.use("/api/courses", require("./routes/courses"));
 
-app.use("/api/people", require("./routes/people"));
+app.use("/api/students", require("./routes/students"));
 
 const port = process.env.PORT || 3030;
 app.listen(port, () =>
