@@ -1,5 +1,6 @@
 const Student = require("./Student");
 const mongoose = require("mongoose");
+
 const schema = new mongoose.Schema({
   code: { type: String, require: true, maxlength: 16 },
   title: { type: String, require: true, maxlength: 255 },
