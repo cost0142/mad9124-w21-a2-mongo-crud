@@ -78,6 +78,16 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+router.delete("/:id", async (req, res) => {
+  try {
+    const student = await Student.findByIdAndRemove(req.params.id);
+    if (!student) throw new Error("Resource not found");
+    res.json({ data: formatResponseData("students", student.toObject()) });
+  } catch (error) {
+    sendResourceNotFound(req, res);
+  }
+});
+
 function formatResponseData(type, resource) {
   const { id, ...attributes } = resource;
   return { type, id, attributes };
