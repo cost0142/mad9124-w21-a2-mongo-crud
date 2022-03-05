@@ -25,6 +25,18 @@ router.post("/", async (req, res) => {
     .json({ data: formatResponseData("courses", newCourse.toObject()) });
 });
 
+router.get("/:id", async (req, res) => {
+  try {
+    const course = await Course.findById(req.params.id).populate("owner");
+    if (!course) {
+      throw new Error("Resource not found");
+    }
+    res.json({ data: formatResponseData("courses", course.toObject()) });
+  } catch (error) {
+    sendResourceNotFound(req, res);
+  }
+});
+
 function formatResponseData(type, resource) {
   const { id, ...attributes } = resource;
   return { type, id, attributes };
