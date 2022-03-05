@@ -1,8 +1,8 @@
 const { response } = require("express");
 const express = require("express");
 const Course = require("../models/Course");
-// const Model = require("../models/Student");
 const router = express.Router();
+const sanitizeBody = require("../middleware/sanitizeBody");
 
 router.get("/", async (req, res) => {
   const courses = await Course.find();
