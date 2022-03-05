@@ -27,12 +27,32 @@ router.post("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   try {
-    const course = await Course.findById(req.params.id).populate("owner");
+    const course = await Course.findById(req.params.id);
     if (!course) {
       throw new Error("Resource not found");
     }
     res.json({ data: formatResponseData("courses", course.toObject()) });
   } catch (error) {
+    sendResourceNotFound(req, res);
+  }
+});
+
+router.patch("/:id", async (req, res) => {
+  try {
+    const { _id, ...attributes } = req.body.data.attributes;
+    const course = await Course.findByIdAndUpdate(
+      req.params.id,
+      { _id: req.params.id, ...otherAttributes },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+    if (!course) {
+      throw new Error("Resource not found");
+    }
+    res.json({ data: formatResponseData("courses", course.toObject()) });
+  } catch (err) {
     sendResourceNotFound(req, res);
   }
 });
