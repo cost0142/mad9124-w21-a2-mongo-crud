@@ -32,6 +32,6 @@ const stripTags = (payload) => {
 module.exports = function (req, res, next) {
   //clean stuff
   const { id, _id, ...attributes } = req.body;
-  req.sanitizedBody = stripTags(attributes);
+  req.body = stripTags(attributes);
   next();
 };

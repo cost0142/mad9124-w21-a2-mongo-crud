@@ -14,7 +14,7 @@ router.get("/", async (req, res) => {
   });
 });
 
-router.post("/", async (req, res) => {
+router.post("/", sanitizeBody, async (req, res) => {
   let attributes = req.body.data.attributes;
   delete attributes._id;
   let newStudent = new Student(attributes);
@@ -37,7 +37,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.patch("/:id", async (req, res) => {
+router.patch("/:id", sanitizeBody, async (req, res) => {
   try {
     const { _id, ...attributes } = req.body.data.attributes;
     const student = await Student.findByIdAndUpdate(
@@ -57,7 +57,7 @@ router.patch("/:id", async (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", sanitizeBody, async (req, res) => {
   try {
     const { _id, ...attributes } = req.body.data.attributes;
     const student = await Student.findByIdAndUpdate(
