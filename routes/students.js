@@ -1,9 +1,10 @@
 const { response } = require("express");
 const express = require("express");
+const sanitizeBody = require("../middleware/sanitizeBody");
 const Student = require("../models/Student");
 const router = express.Router();
-const router = express.Router();
-const sanitizeBody = require("../middleware/sanitizeBody");
+
+// const sanitizeBody = require("../middleware/sanitizeBody");
 
 router.get("/", async (req, res) => {
   const students = await Student.find();
@@ -15,10 +16,10 @@ router.get("/", async (req, res) => {
   });
 });
 
-router.post("/", async (req, res) => {
+router.post("/", sanitizeBody, async (req, res) => {
   let attributes = req.body.data.attributes;
   delete attributes._id;
-  let newStudent = new Student(attributes);
+  let newStudent = new Student(req.sanitizedBody);
   await newStudent.save();
 
   res
@@ -43,7 +44,7 @@ router.patch("/:id", async (req, res) => {
     const { _id, ...attributes } = req.body.data.attributes;
     const student = await Student.findByIdAndUpdate(
       req.params.id,
-      { _id: req.params.id, ...otherAttributes },
+      { _id: req.params.id, ...attributes },
       {
         new: true,
         runValidators: true,
@@ -63,17 +64,17 @@ router.put("/:id", async (req, res) => {
     const { _id, ...attributes } = req.body.data.attributes;
     const student = await Student.findByIdAndUpdate(
       req.params.id,
-      { _id: req.params.id, ...otherAttributes },
+      { _id: req.params.id, ...attributes },
       {
         new: true,
         overwrite: true,
         runValidators: true,
       }
     );
-    if (!car) {
+    if (!student) {
       throw new Error("Resource not found");
     }
-    res.json({ data: formatResponseData("cars", car.toObject()) });
+    res.json({ data: formatResponseData("students", student.toObject()) });
   } catch (err) {
     sendResourceNotFound(req, res);
   }

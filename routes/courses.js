@@ -2,7 +2,7 @@ const { response } = require("express");
 const express = require("express");
 const Course = require("../models/Course");
 const router = express.Router();
-const sanitizeBody = require("../middleware/sanitizeBody");
+// const sanitizeBody = require("../middleware/sanitizeBody");
 
 router.get("/", async (req, res) => {
   const courses = await Course.find();
@@ -42,7 +42,7 @@ router.patch("/:id", async (req, res) => {
     const { _id, ...attributes } = req.body.data.attributes;
     const course = await Course.findByIdAndUpdate(
       req.params.id,
-      { _id: req.params.id, ...otherAttributes },
+      { _id: req.params.id, ...attributes },
       {
         new: true,
         runValidators: true,
@@ -62,7 +62,7 @@ router.put("/:id", async (req, res) => {
     const { _id, ...attributes } = req.body.data.attributes;
     const course = await Course.findByIdAndUpdate(
       req.params.id,
-      { _id: req.params.id, ...otherAttributes },
+      { _id: req.params.id, ...attributes },
       {
         new: true,
         overwrite: true,
