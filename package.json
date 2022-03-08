@@ -11,7 +11,7 @@
     "MAD9124",
     "W22"
   ],
-  "author": "Hygor Costa",
+  "author": "Hygor Costa <cost0142@algonquinlive.com",
   "contributors": [
     "Robert McKenney <mckennr@algonquincollege.com>"
   ],
@@ -20,6 +20,7 @@
   "dependencies": {
     "debug": "^4.3.3",
     "express": "^4.17.3",
+    "express-mongo-sanitize": "^2.2.0",
     "mongoose": "^6.2.3",
     "morgan": "^1.10.0",
     "xss": "^1.0.10"

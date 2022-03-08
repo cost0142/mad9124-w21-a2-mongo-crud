@@ -4,8 +4,6 @@ const sanitizeBody = require("../middleware/sanitizeBody");
 const Student = require("../models/Student");
 const router = express.Router();
 
-// const sanitizeBody = require("../middleware/sanitizeBody");
-
 router.get("/", async (req, res) => {
   const students = await Student.find();
 
@@ -16,10 +14,10 @@ router.get("/", async (req, res) => {
   });
 });
 
-router.post("/", sanitizeBody, async (req, res) => {
+router.post("/", async (req, res) => {
   let attributes = req.body.data.attributes;
   delete attributes._id;
-  let newStudent = new Student(req.sanitizedBody);
+  let newStudent = new Student(attributes);
   await newStudent.save();
 
   res

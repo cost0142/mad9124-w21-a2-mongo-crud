@@ -1,15 +1,16 @@
 const xss = require("xss");
 
-const sanitize = (sourceString) => {
-  return xss(sourceString, {
+const sanitize = (srcString) => {
+  return xss(srcString, {
     whiteList: [],
     stripIgnoreTag: true,
     stripIgnoreTagBody: ["script"],
   });
 };
-const stripTags = (payload) => {
-  const attributes = Object.assign({}, payload); //{...payload}
 
+const stripTags = (payload) => {
+  const attributes = Object.assign({}, payload);
+  // {...payload}
   for (let key in attributes) {
     if (attributes[key] instanceof Array) {
       attributes[key] = attributes[key].map((element) => {
@@ -28,10 +29,9 @@ const stripTags = (payload) => {
   return attributes;
 };
 
-module.exports = (req, res, next) => {
+module.exports = function (req, res, next) {
+  //clean stuff
   const { id, _id, ...attributes } = req.body;
-
   req.sanitizedBody = stripTags(attributes);
-
   next();
 };

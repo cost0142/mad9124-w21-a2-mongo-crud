@@ -1,5 +1,6 @@
 const { response } = require("express");
 const express = require("express");
+const sanitizeBody = require("../middleware/sanitizeBody");
 const Course = require("../models/Course");
 const router = express.Router();
 // const sanitizeBody = require("../middleware/sanitizeBody");
